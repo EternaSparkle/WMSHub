@@ -23,4 +23,6 @@ public interface UserService extends IService<User> {
 
     UserVO getUser(Integer id);
 
+    void deleteUser(Integer id);
+
 }

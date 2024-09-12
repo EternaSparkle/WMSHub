@@ -72,6 +72,9 @@ public class UserController {
         return R.ok(userVO);
     }
 
-
-
+    @DeleteMapping("/deleteUser/{id}")
+    public R deleteUser(@PathVariable("id") Integer id) {
+        userService.deleteUser(id);
+        return R.ok();
+    }
 }

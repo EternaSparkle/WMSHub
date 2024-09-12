@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import priv.eternasparkle.entity.User;
+import priv.eternasparkle.mapper.PermissionMapper;
+import priv.eternasparkle.mapper.RoleMapper;
 import priv.eternasparkle.mapper.UserMapper;
 import priv.eternasparkle.service.UserService;
 import priv.eternasparkle.vo.UserSearchVO;
@@ -22,9 +24,11 @@ import java.time.LocalDateTime;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements UserService {
     private final UserMapper userMapper;
+    private final RoleMapper roleMapper;
 
-    public UserServiceImpl(UserMapper userMapper) {
+    public UserServiceImpl(UserMapper userMapper, RoleMapper roleMapper) {
         this.userMapper = userMapper;
+        this.roleMapper = roleMapper;
     }
 
     @Override
@@ -81,6 +85,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
             throw new RuntimeException("获取用户失败。");
         }
         return user;
+    }
+
+    @Override
+    public void deleteUser(Integer id) {
+       userMapper.clearUserRole(id);
+        int cnt = userMapper.deleteById(id);
+        if (cnt != 1) {
+            throw new RuntimeException("删除用户失败。");
+        }
     }
 
 
