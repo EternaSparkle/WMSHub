@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.eternasparkle.mapper.UserMapper">
+    <resultMap id="UserRoleResultMap" type="priv.eternasparkle.entity.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <association property="role" javaType="priv.eternasparkle.entity.Role">
+            <id column="rid" property="id" jdbcType="INTEGER"/>
+            <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <select id="selectUserAndRoleByUserName" resultMap="UserRoleResultMap">
+        SELECT
+            u.id ,u.username,u.password,r.id rid,r.role_name
+        FROM
+            tbl_user u
+                LEFT JOIN
+            tbl_user_role ur
+            ON
+                u.id = ur.user_id
+                LEFT JOIN
+            tbl_role r
+            ON
+                r.id = ur.role_id
+        WHERE
+            u.username = #{username}
+    </select>
+
+
+    <select id="queryList" resultType="priv.eternasparkle.vo.UserVO">
+        SELECT
+        u.*,
+        d.dept_name AS deptName,
+        r.role_name AS roleName
+        FROM tbl_user u
+        LEFT JOIN tbl_dept d ON u.dept_id = d.id
+        LEFT JOIN tbl_user_role ur ON u.id = ur.user_id
+        LEFT JOIN tbl_role r ON r.id = ur.role_id
+        <include refid="LIST_WHERE_SQL"/>
+    </select>
+
+    <select id="getUserById" resultType="priv.eternasparkle.vo.UserVO">
+        SELECT
+            u.*,
+            d.dept_name AS deptName,
+            r.role_name AS roleName,
+            ur.role_id AS roleId
+        FROM tbl_user u
+        LEFT JOIN tbl_dept d ON u.dept_id = d.id
+        LEFT JOIN tbl_user_role ur ON u.id = ur.user_id
+        LEFT JOIN tbl_role r ON r.id = ur.role_id
+        WHERE u.id = #{id}
+    </select>
+
+    <sql id="LIST_WHERE_SQL">
+    <where>
+        <if test="search.username!=null">
+            and u.username like concat('%', #{search.username}, '%')
+        </if>
+        <if test="search.deptId!=null">
+            and u.dept_id=#{search.deptId}
+        </if>
+  <!--      <if test="search.ageStart!=null">
+            and (u.age >= #{search.ageStart}
+        </if>
+        <if test="search.ageEnd!=null">
+            and (u.age &lt;= #{search.ageEnd}
+        </if>-->
+    </where>
+    </sql>
+</mapper>

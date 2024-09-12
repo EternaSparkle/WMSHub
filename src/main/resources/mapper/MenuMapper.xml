@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.eternasparkle.mapper.MenuMapper">
+
+    <sql id="MENU_FIELD">
+        m.id, m.menu_name as menuName,
+        m.parent_id as parentId,
+        m.component, m.is_menu as isMenu,
+        m.path, m.icon,
+        rp.permission_id as permissionId,
+        rp.role_id as roleId,
+        p.perm_name as permission
+    </sql>
+
+    <select id="getMenuByRole" resultType="Menu">
+        SELECT
+        <include refid="MENU_FIELD"/>
+        FROM
+        tbl_role_permission rp
+        LEFT JOIN tbl_permission p ON rp.permission_id = p.id
+        LEFT JOIN tbl_menu m ON m.permission_id = p.id
+        WHERE
+        rp.role_id = #{roleId} AND m.path != 'none';
+    </select>
+
+</mapper>

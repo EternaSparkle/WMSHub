@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.eternasparkle.mapper.PermissionMapper">
+    <select id="getRoutePermissions" resultType="java.lang.String">
+        SELECT p.perm_name
+        FROM tbl_role_permission rp
+             LEFT JOIN tbl_permission p ON rp.permission_id = p.id
+             LEFT JOIN tbl_menu m ON m.permission_id = p.id
+        WHERE rp.role_id = #{roleId} AND m.path != 'none';
+    </select>
+    <select id="getPermissions" resultType="java.lang.String">
+        SELECT tp.perm_name from tbl_permission tp
+        left join tbl_role_permission trp
+        on tp.id  = trp.permission_id
+        where trp.role_id = #{roleId}
+    </select>
+
+
+</mapper>

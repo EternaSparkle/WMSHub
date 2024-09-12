@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.eternasparkle.mapper.RoleMapper">
+<!--
+    <resultMap id="UserRoleResultMap" type="priv.eternasparkle.entity.Role">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        <collection property="permissions" javaType="java.util.List" ofType="priv.eternasparkle.entity.Permission">
+            <id column="permission_id" property="id" jdbcType="INTEGER"/>
+            <result column="perm_name" property="permName" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+    <select id="selectRoleAndPermissionsByRoleId" resultMap="UserRoleResultMap">
+        SELECT tp.perm_name from tbl_role_permission trp
+        left join tbl_permission tp
+        on trp.permission_id  = tp.id
+        where trp.role_id  = #{roleId}
+    </select>
+-->
+
+</mapper>

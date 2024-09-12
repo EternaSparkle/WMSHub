@@ -1,0 +1,48 @@
+<html>
+<h1>SpringSecurity µÇÂ¼²âÊÔ</h1>
+<div style="font-size:17px;">
+username:<input type="text" id="username" value="andy" /><br/>
+password:<input type="text" id="password" value="123" /><br/>
+</div>
+<input type="button" value="µÇÂ¼Ìá½»" onclick="doLogin();"/>
+<br/><br/><br/>
+<textarea id="box"></textarea>
+</html>
+
+<script src="jquery-1.11.1.min.js"></script>
+<script>
+var BASE = "http://localhost:8080";
+function doLogin(){
+	var _username = $("#username").val();
+	var _password = $("#password").val();
+	$.ajax({
+		url: BASE +'/Common/login',
+		type:'post',
+		data:{username:_username, password:_password},
+		dataType:'json',
+		success:function(resp){
+            console.log(resp);
+			if( resp.result=="success" ){
+                console.log(resp.roleId);
+				localStorage.setItem("roleId",resp.roleId);
+				localStorage.setItem("userId",resp.userId);
+				localStorage.setItem("token",resp.token);
+				let txt = "µÇÂ½³É¹¦:\nuserId:"+ resp.userId +"\n"+
+				          "roleId:"+ resp.roleId +"\n";
+				$("#box").val( txt ); 
+			}else{
+				alert("µÇÂ½Ê§°Ü");
+			}			
+			$("#box").text( str );
+		}
+	});
+}
+</script>
+
+<style>
+#box{ width:300px; height:150px; border:2px solid #666; }
+</style>
+
+
+
+

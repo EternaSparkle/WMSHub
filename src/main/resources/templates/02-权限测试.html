@@ -1,0 +1,50 @@
+<html>
+<h1>SpringSecurity 权限测试</h1>
+
+<button onclick="visit('/Dept/view');">访问[/Dept/view]</button> 
+<br/><br/>
+<button onclick="visit('/Dept/edit');">访问[/Dept/edit]</button>
+<br/><br/>
+<textarea id="box"></textarea>
+</html>
+
+<script src="jquery-1.11.1.min.js"></script>
+<script>
+var BASE = "http://localhost:8080";
+function visit( addr ){
+	$.ajax({
+		url: BASE + addr,
+		type:'get',
+		dataType:'json',
+		beforeSend:function(xhr){
+            //{1}从浏览器的本地存储中取 token.
+            var token = localStorage.getItem('token');
+            //{2}设置到请求头, 携带过去。
+            xhr.setRequestHeader("token",token);
+        },
+		success:function( resp ){
+			let str = JSON.stringify( resp );
+			$("#box").val( str );
+		},
+		error:function( msg ){
+			var obj = msg.responseJSON;
+			let str = JSON.stringify( obj );
+			$("#box").val( str );
+		}		
+	});
+}
+</script>
+
+<style>
+#box{ width:300px; height:150px; border:2px solid #666; }
+button{ font-size:18px; }
+</style>
+
+<!--
+	console.log( resp );
+	let str = JSON.stringify( resp );
+-->
+
+
+
+
