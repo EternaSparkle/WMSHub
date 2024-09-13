@@ -1,9 +1,7 @@
 package priv.eternasparkle.controller;
 
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import priv.eternasparkle.DTO.LoginDTO;
 import priv.eternasparkle.entity.Menu;
 import priv.eternasparkle.service.MenuService;
@@ -12,7 +10,6 @@ import priv.eternasparkle.service.PermissionService;
 import priv.eternasparkle.util.JwtUtils;
 import priv.eternasparkle.entity.User;
 import priv.eternasparkle.service.LoginService;
-import org.springframework.web.bind.annotation.RequestMapping;
 import priv.eternasparkle.util.R;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -92,6 +89,21 @@ public class CommonController {
         }
     }
 
+    @RequestMapping("/getPerms2/{roleId}")
+    public R getPerms2(@PathVariable("roleId") Integer roleId) {
+        try {
+            if (roleId == -1){
+                roleId =0;
+            }
+            List<String> perms = null;
+            perms =   permissionService.getRoutePermissions2(roleId);
+            return R.ok(perms);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.err(e, 500);
+        }
+    }
+
     @RequestMapping("/getMenus/{roleId}")
     public R getMenus(@PathVariable("roleId") Integer roleId) {
         try {
@@ -103,6 +115,17 @@ public class CommonController {
         }
     }
 
+    @RequestMapping("/getMenus2")
+    public R getMenus2(@RequestHeader("token")String token){
+        try {
+            List<Menu> menus = null;
+            menus = menuService.getMenuByRole2(token);
+            return R.ok(menus);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.err(e, 500);
+        }
+    }
 }
 
 

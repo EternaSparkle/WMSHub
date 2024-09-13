@@ -3,6 +3,7 @@ package priv.eternasparkle.templates;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
+import priv.eternasparkle.entity.Menu;
 import priv.eternasparkle.mapper.MenuMapper;
 import priv.eternasparkle.mapper.PermissionMapper;
 
@@ -28,7 +29,7 @@ public class MenuTemplate {
     private final PermissionMapper permissionMapper;
     private final MenuMapper menuMapper;
 
-    public List getMenusByRole(Integer roleId) {
+    public List<Menu> getMenusByRole(Integer roleId) {
         // 获取Redis操作对象
         ValueOperations<String, Object> ops = redisTemplate.opsForValue();
 
