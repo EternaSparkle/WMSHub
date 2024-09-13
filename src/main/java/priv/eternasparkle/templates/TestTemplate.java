@@ -1,4 +1,4 @@
-package priv.eternasparkle.test;
+package priv.eternasparkle.templates;
 
 
 import org.springframework.stereotype.Component;

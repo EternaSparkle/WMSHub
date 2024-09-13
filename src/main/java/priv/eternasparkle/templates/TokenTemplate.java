@@ -1,4 +1,4 @@
-package priv.eternasparkle.util;
+package priv.eternasparkle.templates;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import priv.eternasparkle.DTO.UserDetailDTO;
 import priv.eternasparkle.entity.User;
+import priv.eternasparkle.util.JwtUtils;
 
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;

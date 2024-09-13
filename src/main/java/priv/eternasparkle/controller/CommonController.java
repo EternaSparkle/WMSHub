@@ -1,7 +1,6 @@
 package priv.eternasparkle.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +9,6 @@ import priv.eternasparkle.entity.Menu;
 import priv.eternasparkle.service.MenuService;
 import priv.eternasparkle.service.PermissionService;
 
-import priv.eternasparkle.test.TestTemplate;
 import priv.eternasparkle.util.JwtUtils;
 import priv.eternasparkle.entity.User;
 import priv.eternasparkle.service.LoginService;
