@@ -40,6 +40,7 @@ public class User {
     private String nickName;
     private String email;
     private String phone;
+    private String age;
     private String sex;
     private String no;
     private Role role;
