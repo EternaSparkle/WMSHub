@@ -45,7 +45,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers("/Common/login","Common/register","/Common/loginWithBody","/Axios/data1").anonymous()
-                .antMatchers("/Common/getPerms/**","/Common/getMenus/**","/Options/**").permitAll()
+                .antMatchers("/Common/getPerms/**","/Common/getMenus/**","/Options/**","/Common/getMenus2","/Common/getPerms2/**").permitAll()
                 .antMatchers("/Dept/view").hasAnyAuthority("system:dept:")
                 .antMatchers("/System/User/listUser/**").hasAuthority("system:user:list_user:")
                 .antMatchers("/System/User/addUser").hasAuthority("system:user:add_user:")

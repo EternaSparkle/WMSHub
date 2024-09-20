@@ -1,0 +1,17 @@
+# ---------------------------------
+# 说明: 以下为个人工作台 VUE 路由数据。
+# DATE: 2024-08-25
+# id, menuName, parentId, 
+# mapping, path, permission
+# component, icon, isMenu
+# ---------------------------------
+P1,个人工作台,top,无,/WorkBench/,workbench:,无,icon-1,0
+P11,个人资料,P1,无,/WorkBench/userInfo,workbench:userInfo:,/workbench/UserInfo.vue,icon-1,0
+P12,修改密码,P1,无,/WorkBench/modifyPass,workbench:modifyPass:,/workbench/ModifyPass.vue,icon-1,0
+P13,上传头像,P1,无,/WorkBench/uploadHead,workbench:uploadHead:,/workbench/UploadHead.vue,icon-1,0
+
+
+
+
+
+

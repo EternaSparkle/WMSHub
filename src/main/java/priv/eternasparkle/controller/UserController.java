@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import priv.eternasparkle.entity.User;
 import priv.eternasparkle.service.UserService;
 import priv.eternasparkle.util.R;
+import priv.eternasparkle.vo.UserInfoVO;
 import priv.eternasparkle.vo.UserSearchVO;
 import priv.eternasparkle.vo.UserVO;
 
@@ -31,9 +32,7 @@ public class UserController {
     public R exceptionHandler(Exception e, HttpServletResponse resp) {
         e.printStackTrace();
         resp.setStatus(500);
-
         String msg = e.getMessage();
-
         if (msg.contains("Duplicate entry")) {
             return R.err("你输入的用户名已重复", 500);
         } else {
@@ -72,6 +71,33 @@ public class UserController {
         return R.ok(userVO);
     }
 
+    @GetMapping("/getUser")
+    public R getUserByToken(@RequestHeader("token")String token) {
+        try {
+            UserInfoVO userInfoVO = userService.getUserByToken(token);
+            return R.ok(userInfoVO);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return R.err(e, 500);
+        }
+    }
 
+    @DeleteMapping("/deleteUser/{id}")
+    public R deleteUser(@PathVariable("id") Integer id) {
+        userService.deleteUser(id);
+        return R.ok().put("msg", "删除成功");
+    }
 
+    @PutMapping("/updateUserInfo")
+    public R updateUserInfo(@RequestBody UserInfoVO userInfoVO,@RequestHeader("token")String token){
+        userService.updateUserInfo(userInfoVO,token);
+        return R.ok().put("msg","更新用户信息成功");
+    }
+
+    @PutMapping("/updateUserPassword")
+    public R updateUserPassword(@RequestBody UserVO userVO,@RequestHeader("token")String token){
+        System.out.println(userVO.getPassword());
+        userService.updateUserPassword(token,userVO.getPassword());
+        return R.ok().put("msg","更新密码成功");
+    }
 }

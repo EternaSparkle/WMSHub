@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface MenuService extends IService<Menu> {
     List<Menu> getMenuByRole(Integer roleId);
+    List<Menu> getMenuByRole2(String token);
 }

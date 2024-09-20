@@ -55,7 +55,7 @@ public class LoginServiceImpl implements LoginService {
         User user = DTO.getUser();
         String KEY = "USER:"+user.getId()+":"+user.getPrimaryRoleId();
         ValueOperations<String,Object> OP = redisTemplate.opsForValue();
-        OP.set(KEY,DTO,60*60, TimeUnit.SECONDS);
+        OP.set(KEY,DTO,60*60*7, TimeUnit.SECONDS);
         return user;
     }
 

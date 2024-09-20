@@ -1,29 +1,35 @@
-package priv.eternasparkle.util;
+package priv.eternasparkle.templates;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
+import priv.eternasparkle.entity.Menu;
 import priv.eternasparkle.mapper.MenuMapper;
 import priv.eternasparkle.mapper.PermissionMapper;
 
 import javax.annotation.Resource;
 import java.util.List;
 
-@Component("permissionTemplate")
-public class PermissionTemplate {
+/**
+ * @author EternaSparkle
+ * @Date 2024/09/13
+ * @Time 9:53
+ */
+
+@Component("menuTemplate")
+public class MenuTemplate {
     @Resource(name="myJacksonTemp")
     private RedisTemplate<String,Object> redisTemplate;
-    private final PermissionMapper permissionMapper;
-    private final MenuMapper menuMapper;
 
-    public PermissionTemplate(PermissionMapper permissionMapper, MenuMapper menuMapper) {
+    public MenuTemplate(PermissionMapper permissionMapper, MenuMapper menuMapper) {
         this.permissionMapper = permissionMapper;
         this.menuMapper = menuMapper;
     }
 
-    public List getMenusByRole(Integer roleId) {
+    private final PermissionMapper permissionMapper;
+    private final MenuMapper menuMapper;
+
+    public List<Menu> getMenusByRole(Integer roleId) {
         // 获取Redis操作对象
         ValueOperations<String, Object> ops = redisTemplate.opsForValue();
 
@@ -43,5 +49,4 @@ public class PermissionTemplate {
         // 返回菜单列表
         return menus;
     }
-
 }

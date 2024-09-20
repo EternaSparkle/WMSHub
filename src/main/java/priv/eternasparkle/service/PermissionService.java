@@ -15,4 +15,5 @@ public interface PermissionService extends IService<Permission> {
     List<String> getPermissions(Integer roleId);
 
     List<String> getRoutePermissions(Integer roleId);
+    List<String> getRoutePermissions2(Integer roleId);
 }
