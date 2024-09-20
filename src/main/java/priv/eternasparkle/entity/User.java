@@ -43,6 +43,7 @@ public class User {
     private String age;
     private String sex;
     private String no;
+    @TableField(exist = false)
     private Role role;
     public User(){
 
