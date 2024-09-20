@@ -64,12 +64,15 @@
         <if test="search.deptId!=null">
             and u.dept_id=#{search.deptId}
         </if>
-  <!--      <if test="search.ageStart!=null">
-            and (u.age >= #{search.ageStart}
+        <if test="search.ageStart!=null">
+            and u.age >= #{search.ageStart}
         </if>
         <if test="search.ageEnd!=null">
-            and (u.age &lt;= #{search.ageEnd}
-        </if>-->
+            and u.age &lt;= #{search.ageEnd}
+        </if>
+        <if test="search.nickName!=null">
+            and u.nick_name like concat('%', #{search.nickName}, '%')
+        </if>
     </where>
     </sql>
 </mapper>
