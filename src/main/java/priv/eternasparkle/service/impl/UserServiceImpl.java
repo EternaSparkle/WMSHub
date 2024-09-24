@@ -129,6 +129,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
 
     private User voToPO(UserVO userVO) {
         User user = new User();
+        user.setId(userVO.getId());
         user.setNo(userVO.getNo());
         user.setUsername(userVO.getUsername());
         user.setPassword(userVO.getPassword());

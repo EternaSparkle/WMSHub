@@ -16,19 +16,50 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 公共控制器
+ *
+ * @author EternaSparkle
+ * @version 1.0.0
+ * @date 2024/09/24
+ */
 @RestController
 @RequestMapping("/Common")
 public class CommonController {
+    /**
+     * 登录服务
+     */
     private final LoginService loginService;
+    /**
+     * 权限服务
+     */
     private final PermissionService permissionService;
+    /**
+     * 菜单服务
+     */
     private final MenuService menuService;
 
+    /**
+     * 公共控制器
+     *
+     * @param loginService      登录服务
+     * @param permissionService 权限服务
+     * @param menuService       菜单服务
+     */
     public CommonController(LoginService loginService, PermissionService permissionService, MenuService menuService) {
         this.loginService = loginService;
         this.permissionService = permissionService;
         this.menuService = menuService;
     }
 
+    /**
+     * 登录
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @param response 响应
+     * @return {@link R }
+     */
     @RequestMapping("/login")
     public R login(String username, String password, HttpServletResponse response){
         User svUser = null;
@@ -53,6 +84,14 @@ public class CommonController {
         }
     }
 
+    /**
+     * do login
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @param response 响应
+     * @return {@link R }
+     */
     @RequestMapping("/doLogin")
     private R doLogin(String username, String password,HttpServletResponse response){
         User svUser = null;
@@ -67,6 +106,14 @@ public class CommonController {
                 .put("roleId", svUser.getPrimaryRoleId()==-1?0:svUser.getPrimaryRoleId())
                 .put("token", jwtToken);
     }
+
+    /**
+     * 使用 body 登录
+     *
+     * @param dto  DTO
+     * @param resp 回复
+     * @return {@link R }
+     */
     @RequestMapping("/loginWithBody")
     public R loginWithBody(@RequestBody LoginDTO dto, HttpServletResponse resp) {
         try {
@@ -78,6 +125,12 @@ public class CommonController {
         }
     }
 
+    /**
+     * 烫发
+     *
+     * @param roleId 角色 ID
+     * @return {@link R }
+     */
     @RequestMapping("/getPerms/{roleId}")
     public R getPerms(@PathVariable("roleId") Integer roleId) {
         try {
@@ -89,6 +142,12 @@ public class CommonController {
         }
     }
 
+    /**
+     * 获取 Perms2
+     *
+     * @param roleId 角色 ID
+     * @return {@link R }
+     */
     @RequestMapping("/getPerms2/{roleId}")
     public R getPerms2(@PathVariable("roleId") Integer roleId) {
         try {
@@ -104,6 +163,12 @@ public class CommonController {
         }
     }
 
+    /**
+     * 获取菜单
+     *
+     * @param roleId 角色 ID
+     * @return {@link R }
+     */
     @RequestMapping("/getMenus/{roleId}")
     public R getMenus(@PathVariable("roleId") Integer roleId) {
         try {
@@ -115,6 +180,12 @@ public class CommonController {
         }
     }
 
+    /**
+     * 获取菜单2
+     *
+     * @param token 令 牌
+     * @return {@link R }
+     */
     @RequestMapping("/getMenus2")
     public R getMenus2(@RequestHeader("token")String token){
         try {

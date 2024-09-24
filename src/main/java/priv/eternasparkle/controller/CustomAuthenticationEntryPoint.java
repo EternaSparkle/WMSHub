@@ -11,9 +11,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 自定义身份验证入口点
+ *
+ * @author EternaSparkle
+ * @version 1.0.0
+ * @date 2024/09/24
+ */
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+    /**
+     * 开始
+     *
+     * @param req           要求
+     * @param resp          回复
+     * @param authException auth 异常
+     * @throws IOException      io异常
+     * @throws ServletException Servlet 异常
+     */
     @Override
     public void commence(HttpServletRequest req, HttpServletResponse resp, AuthenticationException authException) throws IOException, ServletException {
         System.out.println("\n+---------------------------------+");

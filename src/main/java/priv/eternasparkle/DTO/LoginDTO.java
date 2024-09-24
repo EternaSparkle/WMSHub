@@ -6,9 +6,11 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
+ * 登录 DTO
+ *
  * @author EternaSparkle
- * @Date 2024/09/03
- * @Time 14:53
+ * @version 1.0.0
+ * @date 2024/09/24
  */
 @Data
 public class LoginDTO implements Serializable {
