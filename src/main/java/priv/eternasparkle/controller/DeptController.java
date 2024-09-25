@@ -86,9 +86,9 @@ public class DeptController {
                     deptListVO.setLeaderName(leaderName);
                     Integer deptId = Integer.parseInt(dept.getId());
                     List<User> deptUsers = deptUserMap.getOrDefault(deptId, List.of());
-                    System.out.println(deptUsers);
                     deptListVO.setDeptUserCount(deptUsers.size());
                     deptListVO.setChildren(buildDeptTree(depts, dept.getId(), deptUserMap, leaderNameMap));
+                    deptListVO.setStatus(true);
                     return deptListVO;
                 })
                 .collect(Collectors.toList());

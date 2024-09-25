@@ -12,7 +12,9 @@ public class Dept {
     private String id;
     private String deptName;
     private String deptDesc;
+    private String deptFullName;
     private String parentId;
     private String pIds;
     private Integer leaderId;
+    private Boolean status;
 }

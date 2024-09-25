@@ -13,5 +13,6 @@ public class DeptListVO {
     private Integer leaderId;
     private String leaderName;
     private List<DeptListVO> children;
-    private int deptUserCount;
+    private Integer deptUserCount;
+    private Boolean status;
 }
