@@ -10,6 +10,7 @@ import priv.eternasparkle.service.UserService;
 import priv.eternasparkle.util.R;
 import priv.eternasparkle.vo.DeptListVO;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -61,7 +62,7 @@ public class DeptController {
         Map<Integer, String> leaderNameMap = users.stream()
                 .collect(Collectors.toMap(User::getId, User::getUsername));
 
-        List<DeptListVO> tree = buildDeptTree(depts, "0", deptUserMap, leaderNameMap);
+        List<Map<String, Object>> tree = buildDeptTree(depts, "0", deptUserMap, leaderNameMap);
         return R.ok(tree);
     }
 
@@ -74,22 +75,27 @@ public class DeptController {
      * @param leaderNameMap Leader Name 映射
      * @return {@link List }<{@link DeptListVO }>
      */
-    private List<DeptListVO> buildDeptTree(List<Dept> depts, String parentId, Map<Integer, List<User>> deptUserMap, Map<Integer, String> leaderNameMap) {
+    private List<Map<String, Object>> buildDeptTree(List<Dept> depts, String parentId, Map<Integer, List<User>> deptUserMap, Map<Integer, String> leaderNameMap) {
         return depts.stream()
                 .filter(dept -> dept.getParentId().equals(parentId))
                 .map(dept -> {
-                    DeptListVO deptListVO = new DeptListVO();
-                    deptListVO.setId(dept.getId());
-                    deptListVO.setDeptName(dept.getDeptName());
-                    deptListVO.setLeaderId(dept.getLeaderId());
+                    Map<String, Object> deptMap = new HashMap<>();
+                    deptMap.put("id", dept.getId());
+                    deptMap.put("deptName", dept.getDeptName());
+                    deptMap.put("leaderId", dept.getLeaderId());
                     String leaderName = leaderNameMap.getOrDefault(dept.getLeaderId(), "Unknown");
-                    deptListVO.setLeaderName(leaderName);
+                    deptMap.put("leaderName", leaderName);
                     Integer deptId = Integer.parseInt(dept.getId());
                     List<User> deptUsers = deptUserMap.getOrDefault(deptId, List.of());
-                    deptListVO.setDeptUserCount(deptUsers.size());
-                    deptListVO.setChildren(buildDeptTree(depts, dept.getId(), deptUserMap, leaderNameMap));
-                    deptListVO.setStatus(true);
-                    return deptListVO;
+                    deptMap.put("deptUserCount", deptUsers.size());
+
+                    List<Map<String, Object>> children = buildDeptTree(depts, dept.getId(), deptUserMap, leaderNameMap);
+                    if (!children.isEmpty()) {
+                        deptMap.put("hasChildren", true);
+                        deptMap.put("children", children);
+                    }
+
+                    return deptMap;
                 })
                 .collect(Collectors.toList());
     }
