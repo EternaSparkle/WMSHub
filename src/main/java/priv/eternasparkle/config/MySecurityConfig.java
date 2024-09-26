@@ -51,7 +51,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/System/User/addUser").hasAuthority("system:user:add_user:")
                 .antMatchers("/System/User/updateUser").hasAuthority("system:user:update_user:")
                 .antMatchers("/System/User/delUser/**").hasAuthority("system:user:del_user:")
-                .antMatchers("/System/User/getUser/**").hasAuthority("system:user:get_user:")
+                .antMatchers("/System/User/getUser/**").hasAuthority("workBench:user_Info:get_user")
                 .antMatchers("/Dept/**").hasRole("manager")
                 .anyRequest().authenticated();
         http.addFilterBefore(
