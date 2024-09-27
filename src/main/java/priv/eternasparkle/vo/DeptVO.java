@@ -1,21 +1,22 @@
-package priv.eternasparkle.entity;
+package priv.eternasparkle.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
  * @author EternaSparkle
- * @Date 2024/09/13
- * @Time 9:31
+ * @Date 2024/09/27
+ * @Time 10:46
  */
 @Data
-public class Dept {
-    @TableId(type = IdType.AUTO)
-    private String id;
+public class DeptVO {
+    private String lastDeptName;
     private String deptName;
-    private String deptDesc;
     private String deptFullName;
+
+
+    private String id;
+
+    private String deptDesc;
     private String parentId;
     private String pIds;
     private Integer leaderId;

@@ -2,6 +2,9 @@ package priv.eternasparkle.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import priv.eternasparkle.entity.Dept;
+import priv.eternasparkle.vo.CLeaderVO;
+
+import java.util.List;
 
 /**
  * @author EternaSparkle
@@ -9,6 +12,5 @@ import priv.eternasparkle.entity.Dept;
  * @Time 14:33
  */
 public interface DeptService extends IService<Dept> {
-
 
 }

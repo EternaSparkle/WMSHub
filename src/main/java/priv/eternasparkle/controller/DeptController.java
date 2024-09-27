@@ -1,13 +1,13 @@
 package priv.eternasparkle.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.parameters.P;
+import org.springframework.web.bind.annotation.*;
 import priv.eternasparkle.entity.Dept;
 import priv.eternasparkle.entity.User;
 import priv.eternasparkle.service.DeptService;
 import priv.eternasparkle.service.UserService;
 import priv.eternasparkle.util.R;
+import priv.eternasparkle.vo.CLeaderVO;
 import priv.eternasparkle.vo.DeptListVO;
 
 import java.util.HashMap;
@@ -98,5 +98,19 @@ public class DeptController {
                     return deptMap;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/getCLeader/{deptId}")
+    public R getCLeaderByDeptId(@PathVariable("deptId")String deptId, @RequestParam(value = "word", required = false) String word){
+        if (word == null) {
+            word = "";
+        }
+        List<CLeaderVO> leaders = userService.getCLeaderByDeptId(deptId,word);
+        return R.ok(leaders);
+    }
+
+    @PostMapping("/addDept")
+    public R addDept(@RequestBody Dept dept){
+        return deptService.save(dept) ? R.ok() : R.err(new Exception("添加失败"));
     }
 }

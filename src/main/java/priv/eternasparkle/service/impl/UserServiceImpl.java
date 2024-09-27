@@ -1,8 +1,10 @@
 package priv.eternasparkle.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import priv.eternasparkle.entity.User;
@@ -10,9 +12,13 @@ import priv.eternasparkle.mapper.RoleMapper;
 import priv.eternasparkle.mapper.UserMapper;
 import priv.eternasparkle.service.UserService;
 import priv.eternasparkle.templates.TokenTemplate;
+import priv.eternasparkle.vo.CLeaderVO;
 import priv.eternasparkle.vo.UserInfoVO;
 import priv.eternasparkle.vo.UserSearchVO;
 import priv.eternasparkle.vo.UserVO;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -124,6 +130,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         BCryptPasswordEncoder encoder =new BCryptPasswordEncoder();
         userVO.setPassword(encoder.encode(newPassword));
         updateUser(userVO);
+    }
+
+    @Override
+    public List<CLeaderVO> getCLeaderByDeptId(String deptId, String word) {
+        System.out.println("deptId = " + deptId + ", word = " + word);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("dept_id", deptId).like("nick_name", word);
+        List<User> users = userMapper.selectList(queryWrapper);
+        return users.stream().map(this::userToCLeaderVO).collect(Collectors.toList());
+    }
+
+    private CLeaderVO userToCLeaderVO(User user) {
+        CLeaderVO cLeaderVO = new CLeaderVO();
+        cLeaderVO.setId(user.getId());
+        cLeaderVO.setNickname(user.getNickName());
+        return cLeaderVO;
     }
 
 
